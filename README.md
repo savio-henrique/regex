@@ -10,11 +10,10 @@
 
 ## Lista de conteúdo
 
-<details><summary><h3>
+<details><summary><h4>
 
 :star: Básico
-
-</h3></summary>
+</h4></summary>
 
 * [**O que são?**](#o-que-diabos-são-expressões-regulares)
 * [**Tipo unitário**](#tipo-unitário)
@@ -36,14 +35,11 @@
   * [Ou ( **```|```** )](#ou)
   * [Classes **POSIX**](#classes-posix)
 * [Precedência de metacaracteres](#precedência)
-
 </details>
-
-<details><summary><h3>
+<details><summary><h4>
 
 :skull: Avançado
-
-</h3></summary>
+</h4></summary>
 
 * [**Gulodice**](#gulodice)
 * [**Referenciadores**](#referenciadores)
@@ -62,21 +58,17 @@
   * [Grupo modificador ( **```(?)```** )](#grupo-modificador)
   * [If-then-else ( **(?(condição)ER-sim|ER-não)** )](#if-then-else)
   * [Código ( **(?{código})** )](#código)
-
 </details>
-
-<details><summary><h3>
+<details><summary><h4>
 
 :bar_chart: Tabelas
-
-</h3></summary>
+</h4></summary>
 
 * [Classes **POSIX**](#tabela-das-classes-posix)
 * [**Barra-letras**](#tabela-de-barra-letras)
-
 </details>
 
-### :book: [Referência](#📖-referência)
+#### :book: [Referência](#📖-referência)
 
 
 ## :star: Básico
