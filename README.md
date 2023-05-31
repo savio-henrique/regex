@@ -258,7 +258,8 @@ Os metacaracteres do tipo especial são os que não encaixam necessáriamente em
 
 O metacaractere escape ( **```\```** ) é o metacaractere cancelador, ele negativa todos os efeitos especiais do metacaractere seguinte, transformando-o em um literal.
 
-> Exemplos:
+> Exemplo:
+>
 > ```dois\*litros``` casa somente com "dois*litros", o asterisco se torna literal.
 >
 > ```isso\\esse``` casa somente com "isso\esse", veja que há a possibilidade de escapar o escape, caso desejar.
@@ -283,7 +284,8 @@ Classes POSIX são uma classe de objetos que representam intervalos, e são regi
 
 Para mais informações consulte a [Tabela POSIX](#tabela-das-classes-posix).
 
-> Exemplos:
+> Exemplo:
+>
 > ```[[:alnum:]]{3}``` casa com 3 caracteres alfanuméricos.
 >
 > ```[:digit:]``` casa com um único dígito.
