@@ -66,6 +66,9 @@
 
 * [Classes **POSIX**](#tabela-das-classes-posix)
 * [**Barra-letras**](#tabela-de-barra-letras)
+  * [B-L Caracteres](#b-l-caracteres)
+  * [B-L Modificadores](#b-l-modificadores)
+  * [B-L Intervalo](#b-l-intervalo)
 </details>
 
 #### :book: [Referência](#📖-referência)
@@ -96,6 +99,7 @@ Os metacaracteres unitários são metacaracteres cujo casam somente com um carac
 O ponto ( **```.```** ) casa com um único caractere qualquer, sem específicidade, casando com qualquer caractere da tabela ASCII.
 
 > Exemplo:
+>
 >  ```...``` casa com "aaa","abb", "uhf" ou "(1@"
 
 ---
@@ -105,6 +109,7 @@ O ponto ( **```.```** ) casa com um único caractere qualquer, sem específicida
 Um caractere específico em uma Expressão Regular é o mesmo que casar um único caractere com aquele valor ASCII.
 
 > Exemplo:
+>
 > ```a``` casa somente com "a" e ```olá``` casa somente com "olá"
 
 ---
@@ -114,6 +119,7 @@ Um caractere específico em uma Expressão Regular é o mesmo que casar um únic
 A lista ( **```[]```** ) casa um único caractere cujo é pertencente à essa lista. Pode-se usar de intervalos que seguem a ordem numérica da tabela ASCII, como ```[A-z]```, cujo também casa com os caracteres **"[\\]^_`"**, recomendando-se usar [Classes POSIX](#classes-posix).
 
 > Exemplo:
+>
 > ```[a-z]``` casa qualquer caractere de "a" até "z".
 >
 > ```[0123]``` casa um caractere caso ele seja "0", "1", "2" ou "3".
@@ -123,6 +129,7 @@ A lista ( **```[]```** ) casa um único caractere cujo é pertencente à essa li
 A lista negada ( **```[^]```** ) é quase o mesmo que a lista, porém ela casa qualquer caractere exceto os que a pertencem.
 
 > Exemplo:
+>
 > ```[^1234abcd]``` casa quaisquer caracteres que não sejam "1", "2", "3", "4", "a", "b", "c" ou "d".
 
 **Normalidade**
@@ -130,6 +137,7 @@ A lista negada ( **```[^]```** ) é quase o mesmo que a lista, porém ela casa q
 Todo caractere inserido dentro de uma lista é um caractere comum, inclusive os metacaracteres como ```.```, ```*``` entre outros, com exceção dos caracteres ```-```, ```]``` e ```[``` que devem ser inseridos no começo da lista ou no final da lista.
 
 > Exemplo:
+>
 > ```[*{}.]``` casa com os caracteres "*", "{", "}" e ".".
 >
 > ```[][-]``` é uma lista cujo casa com os caracteres "]", "[" e "-".
@@ -145,6 +153,7 @@ Os quantificadores são metacaracteres cujo quantificam a quantidade que um [gru
 O asterisco ( **```*```** ) casa com qualquer quantidade de caracteres, ou seja, para ele não importa se não há o caractere, se há um ou se há mais caracteres.
 
 > Exemplo:
+>
 > ```a*``` casa com "", "a", "aa" e assim por diante...
 >
 > O curinga das ER's ```.*``` casa com qualquer caractere em qualquer quantidade, inclusive strings vazias como "".
@@ -156,6 +165,7 @@ O asterisco ( **```*```** ) casa com qualquer quantidade de caracteres, ou seja,
 O metacaractere opcional ( **```?```** ) casa com nenhum ou um do caractere quantificado, ou seja, o caractere se torna opcional.
 
 > Exemplo:
+>
 > ```casas?``` casa com "casa" e com "casas" pois o "s" se torna opcional.
 >
 > ```casa[srlm]?``` casa com "casa", "casas", "casar", "casal" e "casam".
@@ -166,7 +176,8 @@ O metacaractere opcional ( **```?```** ) casa com nenhum ou um do caractere quan
 
 O requerido ( **```+```** ) faz com que o caractere a ser quantificado seja obrigatório, casando com um ou mais desse caractere.
 
-> Exemplo: 
+> Exemplo:
+> 
 > ```[a-z]+``` casa de "a" até "z" obrigatoriamente em qualquer quantidade.
 >
 > ```domingos+``` casa com "domingos", "domingoss", "domingosss", "domingossss" e assim por diante.
@@ -178,6 +189,7 @@ O requerido ( **```+```** ) faz com que o caractere a ser quantificado seja obri
 As chaves ( **```{n,m}```** ) são metacaracteres que quantificam na quantidade mínima e máxima, podendo omitir a quantidade máxima.
 
 > Exemplo:
+>
 > ```[0-9]{3,9}``` casa com um número de 3 à 9 dígitos de 0 à 9.
 >
 > A ER ```[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]``` casa com o modelo de um CPF, por exemplo : "123.456.789-0"
@@ -193,6 +205,7 @@ Os metacaracteres delimitadores são metacaracteres que descrevem ou barram limi
 O grupo ( **```(...)```** ) é um tipo especial de metacaractere que delimita a ação de uma ER específica, tornando possível quantificá-la como um único caractere, assim como fazer o uso de [retrovisores](#retrovisores).
 
 > Exemplo:
+>
 > ```(joga)``` casa com "joga", mas ```(joga){2}``` casa somente com "jogajoga".
 >
 > A ER do CPF, agora com o uso de grupos, pode ser reformulada para: ```([0-9]{3}.){2}[0-9]{3}-[0-9]``` porém ainda fica algo muito grotesco.
@@ -204,6 +217,7 @@ O grupo ( **```(...)```** ) é um tipo especial de metacaractere que delimita a 
 Esse delimitador de início ( **```^```** ) é um metacaractere que deve sempre ser colocado no início da ER, simboliza que quer casar a ER somente se ela estiver no começo de  uma linha.
 
 > Exemplo:
+>
 > ```^amarelo``` casará com "amarelo" somente se ele estiver no início da linha, por exemplo, não casaria a palavra "amarelo" de "o meu carro é amarelo" e sim com "amarelo é a cor do meu carro".
 >
 > ```^^``` casa com uma string cujo o início é um acento circunflexo, ou seja, casa com "^".
@@ -215,6 +229,7 @@ Esse delimitador de início ( **```^```** ) é um metacaractere que deve sempre 
 Assim como o metacaractere início, o metacaractere fim ( **```$```** ) é o seu complementar, têm de ser posto no final da ER, simbolizando que somente casará caso a linha termine com essa determinada ER.
 
 > Exemplo:
+>
 > ```123$``` casa somente com "123" no final de uma linha.
 >
 > São usados juntos o ```^``` e o ```$``` para casar uma linha inteira assim: ```^dobrados$``` casa somente com a string completa "dobrados".
@@ -226,6 +241,7 @@ Assim como o metacaractere início, o metacaractere fim ( **```$```** ) é o seu
 A borda ( **```\b```** )é um metacaractere delimitador que casa as bordas de uma palavra, os limites.
 
 > Exemplo:
+>
 > ```\bs.``` casa com "sao", "s34", "so", entre outros, mas não com "coi**sa**".
 >
 > Porém, a ER ```s.\b``` não casa com "são" nem com "s34", mas casa com "so" e com "coisa".
@@ -254,6 +270,7 @@ O metacaractere escape ( **```\```** ) é o metacaractere cancelador, ele negati
 O metacaractere ou ( **```|```** ) é um metacaractere que casa com uma opção ou outra.
 
 > Exemplo:
+>
 > ```isso|esse``` casa com "isso" ou com "esse".
 >
 > ```(super|hiper)?mercado``` casa com "supermercado" ou com "hipermercado" ou com "mercado".
@@ -282,6 +299,7 @@ Os metacaracteres possuem uma ordem de precedência, seguindo:
 3. Ou ( ```ab|cd``` )
 
 > Exemplo:
+>
 > ```abc|bca``` casa "abc" ou "bca", pois a concatenação tem precedência maior, e não casa "abcca" ou "abbca", para casá-los teria-se de usar a ER ```ab(c|b)ca```.
 >
 > ```ab{3}|ec{3}``` casa com "abbb" ou "eccc", pois o quantificador têm precedência maior que a concatenação e que o ou, e não casaria "ababab" ou "ececec", porém, caso queira casá-los teria que usar a ER ```(ab){3}|(ec){3}```.
