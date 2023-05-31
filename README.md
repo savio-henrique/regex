@@ -244,6 +244,7 @@ O metacaractere escape ( **```\```** ) é o metacaractere cancelador, ele negati
 
 > Exemplos:
 > ```dois\*litros``` casa somente com "dois*litros", o asterisco se torna literal.
+>
 > ```isso\\esse``` casa somente com "isso\esse", veja que há a possibilidade de escapar o escape, caso desejar.
 
 ---
@@ -254,6 +255,7 @@ O metacaractere ou ( **```|```** ) é um metacaractere que casa com uma opção 
 
 > Exemplo:
 > ```isso|esse``` casa com "isso" ou com "esse".
+>
 > ```(super|hiper)?mercado``` casa com "supermercado" ou com "hipermercado" ou com "mercado".
 
 ---
@@ -266,13 +268,23 @@ Para mais informações consulte a [Tabela POSIX](#tabela-das-classes-posix).
 
 > Exemplos:
 > ```[[:alnum:]]{3}``` casa com 3 caracteres alfanuméricos.
+>
 > ```[:digit:]``` casa com um único dígito.
 
 ---
 
 ### Precedência -
 
-Os metacaracteres possuem uma ordem de precedência
+Os metacaracteres possuem uma ordem de precedência, seguindo:
+
+1. Quantificador ( ```g+``` )
+2. Concatenação ( ```ab``` )
+3. Ou ( ```ab|cd``` )
+
+> Exemplo:
+> ```abc|bca``` casa "abc" ou "bca", pois a concatenação tem precedência maior, e não casa "abcca" ou "abbca", para casá-los teria-se de usar a ER ```ab(c|b)ca```.
+>
+> ```ab{3}|ec{3}``` casa com "abbb" ou "eccc", pois o quantificador têm precedência maior que a concatenação e que o ou, e não casaria "ababab" ou "ececec", porém, caso queira casá-los teria que usar a ER ```(ab){3}|(ec){3}```.
 
 ---
 
