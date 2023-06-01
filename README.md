@@ -632,3 +632,5 @@ Existem três tipos de Barra-letras:
 # :book: Referência
 
 Esse artigo foi inspirado e feito com a ajuda do livro "Expressões Regulares - Uma Abordagem Divertida - 2ª Edição" escrito por Aurélio Marinho Jargas pela editora Novatec.
+
+[Site oficial das Expressões Regulares]()
