@@ -71,6 +71,8 @@
   * [B-L Intervalo](#b-l-intervalo)
 </details>
 
+#### [:cd: Finalizações](#💿-finalizações)
+
 #### :book: [Referência](#📖-referência)
 
 
@@ -546,7 +548,6 @@ m<
     (?{ $res = $cnt })        #se ok, copia para uma var não-local
   >x;
 ```
-
 ---
 
 ## :bar_chart: Tabelas
@@ -629,8 +630,18 @@ Existem três tipos de Barra-letras:
 
 ---
 
+## :cd: Finalizações
+
+Contudo, as ERs ainda possuem muitas outras funcionalidades que foram adicionadas ao decorrer do tempo e dependente das aplicações.
+
+Existem algumas dicas ao escrever suas ERs que ajudam a escrevê-las melhor, porém esse artigo foi somente um pequeno resumo sobre as funcionalidades e componentes.
+
+Obrigado por ler até aqui!
+
+---
+
 # :book: Referência
 
 Esse artigo foi inspirado e feito com a ajuda do livro "Expressões Regulares - Uma Abordagem Divertida - 2ª Edição" escrito por Aurélio Marinho Jargas pela editora Novatec.
 
-[Site oficial das Expressões Regulares]()
+[Site com referencias e guias das Expressões Regulares](https://www.regular-expressions.info/quickstart.html).
