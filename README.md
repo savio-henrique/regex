@@ -78,7 +78,7 @@
 
 ### O QUE DIABOS SÃO EXPRESSÕES REGULARES?
 
-Expressões regulares, também conhecidas como **ER's**, **regex**, **regexes** e entre outras, é uma ferramenta muito poderosa utilizada para **"casar"** com uma determinada sequência de caracteres.
+Expressões regulares, também conhecidas como **ERs**, **regex**, **regexes** e entre outras, é uma ferramenta muito poderosa utilizada para **"casar"** com uma determinada sequência de caracteres.
 
 Casar é algo como combinar e verificar caso o texto dado siga o padrão descrito pela ER.
 
@@ -86,7 +86,7 @@ Casar é algo como combinar e verificar caso o texto dado siga o padrão descrit
 
 Pode parecer algo intimidador por conta da má legibilidade, porém, ao analisar cada componente individualmente, vê-se que não é um "bicho de sete cabeças" como muitos pensam.
 
-Para facilitar o seu aprendizado, aqui você verá uma breve descrição e exemplos dos tipos de metacaracteres utilizados para a formação dessas ER's.
+Para facilitar o seu aprendizado, aqui você verá uma breve descrição e exemplos dos tipos de metacaracteres utilizados para a formação dessas ERs.
 
 ---
 
@@ -156,7 +156,7 @@ O asterisco ( **```*```** ) casa com qualquer quantidade de caracteres, ou seja,
 >
 > ```a*``` casa com "", "a", "aa" e assim por diante...
 >
-> O curinga das ER's ```.*``` casa com qualquer caractere em qualquer quantidade, inclusive strings vazias como "".
+> O curinga das ERs ```.*``` casa com qualquer caractere em qualquer quantidade, inclusive strings vazias como "".
 
 ---
 
@@ -310,13 +310,44 @@ Os metacaracteres possuem uma ordem de precedência, seguindo:
 
 ## :skull: Avançado
 
-### Gulodice -
+### Referenciadores -
+
+Os metacaracteres referenciadores são metacaracteres cujo objetivo é referenciar uma certa parte da expressão, normalmente sendo grupos.
+
+#### Retrovisores
+
+Os retrovisores ( **```\1, \2, \3 ...```** ) são metacaracteres responsáveis por referenciar grupos anteriormente processados pela ER, por isso casam somente com o que já foi previamente processado. Seguindo sua numeração pela ordem de aparição do grupo. 
+
+> Exemplo:
+>
+> ```(lero)-\1``` casa com "lero-lero".
+>
+> ```((super|hiper|mini)mercado) é um \2 \1``` casa com "supermercado é um super supermercado" ou trocando os "super" por "hiper" ou "mini". Veja que a ordem cujo os números são utilizados é derivada da ordem em que os grupos foram abertos, ou seja, a ordem em que aparecem os ```(``` .
+> Essa ER não casa com "hipermercado é um super supermercado" pois o grupo ```\1``` foi processado com o valor "hipermercado" e o grupo ```\2``` foi processado com o valor "hiper".
 
 ---
 
-### Referenciadores -
+### Gulodice -
 
-#### Retrovisores
+A gulodice é um conceito dos quantificadores que classificam todos eles, diz-se guloso aquele quantificador cujo tenta casar o máximo de caracteres possíveis, por exemplo:
+
+A ER ```[ar]*a``` casaria com qual dessas alternativas na palavra arara?
+
+1. "a"       - nenuma vez a [ar]
+2. "ara"     - duas vezes a [ar]
+3. "arara"   - quatro vezes a [ar]
+4. n.d.a 
+
+Por ser um caractere guloso, ele casaria o máximo de caracteres possíveis, sendo assim, casaria com a alternativa 3.
+
+Esse é um dos motivos pelos quais evitamos o uso dos chamados curingas como ```.*``` pois eles casariam com todos os caracteres independente do resto da ER.
+
+> Exemplo:
+>
+> ```<.*>``` querendo casar quaisquer tags em uma string, ao tentar com a  string "\<b> uma string \</b>", o ```.*``` acabaria casando com  a parte em negrito: "<***b> uma string </b***>.
+>
+
+Para a resolução disso, alguns programas oferecem a utilização de quantificadores não-gulosos, como os abaixo.
 
 ---
 
@@ -324,51 +355,197 @@ Os metacaracteres possuem uma ordem de precedência, seguindo:
 
 #### Asterisco não-guloso
 
+O asterisco não-guloso ( **```*?```** ) age como o asterisco porém casando sempre o mínimo possível.
+
+> Exemplo:
+>
+> Guloso: ```a.*``` casa com "aaaaaa"
+>
+> Não-Guloso: ```a.*?``` casa com "a"
+
 ---
 
 #### Opcional não-guloso
+
+O opcional não-guloso ( **```??```** ) age como o opcional comum porém casando sempre o mínimo possível.
+
+> Exemplo:
+>
+> Guloso: ```a.?``` casa com "aa"
+>
+> Não-Guloso: ```a.??``` casa com "a"
 
 ---
 
 #### Requerido não-guloso
 
+O requerido não-guloso ( **```+?```** ) age como o requerido comum porém casando sempre o mínimo possível.
+
+> Exemplo:
+>
+> Guloso: ```a.+``` casa com "aaaaaa"
+>
+> Não-Guloso: ```a.+?``` casa com "aa"
+
 ---
 
 #### Chaves não-gulosas
+
+As chaves não-gulosas ( **```{n,m}?```** ) age como as chaves porém casando sempre o mínimo possível.
+
+> Exemplo:
+>
+> Guloso: ```a.{1,3}``` casa com "aaaa"
+>
+> Não-Guloso: ```a.{1,3}?``` casa com "aa"
 
 ---
 
 ### Barra-letras -
 
+Os barra letras são um tipo especial de metacaracteres, pois, a depender do interprete da ER, eles podem ter diferentes significados e diferentes usos. São identificados por uma barra invertida ```\``` seguida de uma letra qualquer do alfabeto, seja minúscula ou maiúscula.
+
+Para mais informações sobre os barra-letras, consulte a documentação do aplicativo que deseja usar e a [tabela dos barra-letra](#tabela-de-barra-letras).
+
 ---
 
 ### Modificadores Especiais -
 
+Não bastando tantas funcionalidades para as ERs, quem as usava queria sempre mais e mais funcionalidades, adicionando assim os modificadores especiais, que fazem muito mais do que somente casar certos caracteres.
+
+São geralmente um grupo com uma interrogação dentro seguido de sua funcionalidade ```(?<identificador><conteúdo>)```.
+
 #### Comentário
+
+O comentário ( **```(?#texto)```** ) é como nos comentários de código, não é interpretado pelo interprete da ER, tornando possível se comentar alguma parte da expressão.
+
+> Exemplo:
+>
+> ```(?#meu nome)Sávio (?#meu sobrenome)Henrique``` casa com "Sávio Henrique".
 
 ---
 
 #### Lookups
 
+Lookups são mecanismos que dão uma "espiada" mais a frente ou atrás, e, caso a ER contida neles case, é retornado sucesso. Mais explicações a frente.
+
+Existem 2 tipos de lookups:
+
+* Front lookup
+  * !Front Lookup
+* Back Lookup
+  * !Back Lookup
+
+**Front Lookup**
+
+O Front Lookup ( **```(?=ER)```** ) dá uma "espiada" para a frente, e caso a ER contida case ele casa os termos anteriores.
+
+> Exemplo:
+>
+> ```Cauda (?=de Dragão)``` só casará "Cauda" caso seja seguida por "de Dragão", porém o termo casado será só "Cauda", não "Cauda de Dragão".
+
+**!Front Lookup**
+
+O !Front Lookup ( **```(?!ER)```** ) assim como o anterior, dá uma "espiada" a frente, porém é o contrário, pois só casa caso esse trecho não siga a ER contida nele.
+
+> Exemplo:
+>
+> ```Sapo (?!cururu)``` casará somente se "Sapo" não for seguido de "cururu", porém casará "Sapo" se vier seguido de "azul", "verde" entre outros.
+
+**Back Lookup**
+
+Assim como o Front Lookup, o Back Lookup ( **```(?<=ER)```** ) dá uma "espiada" porém para trás do trecho, note o ```<``` apontando para a esquerda.
+
+> Exemplo:
+>
+> ```(?<=Carlos )Santos Dumont``` casará apenas "Santos Dumont" se for precedido por "Carlos ".
+
+**!Back Lookup**
+
+Igual aos anteriores, o !Back Lookup ( **```(?<!ER)```** ) dá uma "espiada" para trás e casa somente o que trecho caso ele não siga a ER contida.
+
+> Exemplo:
+>
+> ```(?<!Carlos )Santos Dumont``` casará apenas "Santos Dumont" se não for precedido por "Carlos ".
+
 ---
 
 #### Grupo Excluído
+
+O grupo excluído ( **```(?:ER)```** ) funciona igual um grupo comum, porém a sua diferença é que ele não é incluido na contagem de grupos, portanto não se pode referenciar ele por meio de retrovisores, como um grupo fantasma.
+
+> Exemplo:
+>
+> ```(Jonah) (?:J.) (Jameson)``` casa o nome completo de "Jonah J. Jameson" porém ```\1``` contém "Jonah" e ```\2``` contém "Jameson".
 
 ---
 
 #### Grupo Nomeado
 
+O grupo nomeado é um grupo que possui um nome, podendo obter-se o valor casado referenciando pelo nome (a maioria dos aplicativos não possuem suporte a esse tipo de referência).
+
+> Exemplo:
+>
+> ```(?<nome>Sávio) (?<sobrenome>Henrique)``` casaria "Sávio Henrique".
+>
+> ```(?<nome>Sávio) (?<sobrenome>Henrique) (?P=sobrenome)```, em alguns lugares, essa ER casaria com "Sávio Henrique Henrique".
+
 ---
 
 #### Grupo modificador
+
+O grupo modificador ( **```(?modificador)```** ) configura a ER a partir de um modificador, que é uma letra cujo pode ser:
+
+| Letra | Significado|
+|---|---|
+| i | Ignorar a diferença entre maiúscula e minúscula|
+| m | Trata o texto como multilinha
+| s | Trata o texto como uma única linha|
+| x | Permite inclusão e espaços e comentários|
+| L | Levar em conta a localização do sistema (somente Python) |
+
+> Exemplo:
+>
+>  ```(?\i)dormiu``` casa com "DORMIU" ou "dormiu" ou "DorMIu", entre outras.
 
 ---
 
 #### If-then-else
 
+O if-then-else ( **```(?(condição)ER-sim|ER-não)```** ) , assim como na programação, funciona como um operador ternário, caso a condição seja dada como verdadeira, utilize a ER-sim, caso não, utilize a ER-não. Geralmente essa condição é uma referencia para um grupo prévio.
+
+É raramente suportada por aplicativos, por isso, verifique com a documentação.
+
+> Exemplo:
+>
+> ```(\+)?(?(1)[0-9]{2} )[0-9]{3} 9[0-9]{8}``` casa com um número de telefone, caso tenha o "+" no começo, deve ser seguido por 2 dígitos, casando "033 912345678" e também "+55 033 912345678". Nesse caso, não utilizei a ER-não.
+>
+> ```(Sr.)?(?(1) Comandante|Cabo) Sávio``` casa, caso tenha "Sr." no começo, com "Sr. Comandante Sávio", e, caso não o tenha, com "Cabo Sávio". Ou seja, têm de haver "Comandante" ou "Cabo" caso não haja o honorífico.
+
 ---
 
 #### Código
+
+Aqui é onde o ponto máximo de perca de compatibilidade de ERs entre aplicativos reside.
+
+O Código ( **```(?{código})```** ) permite-se colocar código de linguagens de programação dentro da própria ER.
+
+O exemplo abaixo é tirado do manual do Perl:
+
+```perl
+$_ = 'a' x 8;
+m<
+  (?{ $cnt = 0})              #inicializa 
+  (
+    a
+      (?{
+        local $cnt = $cnt +1; #incrementa
+      })
+    )*
+    aaaa
+    (?{ $res = $cnt })        #se ok, copia para uma var não-local
+  >x;
+```
 
 ---
 
