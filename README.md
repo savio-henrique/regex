@@ -4,10 +4,6 @@
 
 ---
 
-## Esse repositório ainda é um WIP (Work in Progress) por isso aguarde mais atualizações
-
----
-
 ## Lista de conteúdo
 
 <details><summary><h4>
